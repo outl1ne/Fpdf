@@ -511,7 +511,7 @@ class Fpdf
 	function SetFontSize( $size ) {
 		// Set font size in points
 		if( $this->FontSizePt == $size )
-			return;
+			return $this;
 		$this->FontSizePt = $size;
 		$this->FontSize = $size / $this->k;
 		if( $this->page > 0 )
