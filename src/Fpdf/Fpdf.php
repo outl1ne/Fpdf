@@ -172,6 +172,11 @@ class Fpdf
 		// Set default PDF version number
 		$this->PDFVersion = '1.3';
 	}
+	
+	function setFontPath(string $fontPath)
+	{
+		$this->fontpath = $fontPath;
+	}
 
 	function SetMargins( $left, $top, $right = null ) {
 		// Set left, top and right margins
