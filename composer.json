@@ -1,6 +1,6 @@
 {
-  "name": "fpdf/fpdf",
-  "homepage": "https://github.com/coreydoughty/Fpdf",
+  "name": "outl1ne/fpdf",
+  "homepage": "https://github.com/outl1ne/Fpdf",
   "description": "FPDF Composer Wrapper",
   "keywords": ["fpdf", "pdf", "wrapper"],
   "license": "MIT",
