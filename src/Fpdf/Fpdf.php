@@ -180,6 +180,7 @@ class Fpdf
 		if( $right === null )
 			$right = $left;
 		$this->rMargin = $right;
+		return $this;
 	}
 
 	function SetLeftMargin( $margin ) {
@@ -187,16 +188,19 @@ class Fpdf
 		$this->lMargin = $margin;
 		if( $this->page > 0 && $this->x < $margin )
 			$this->x = $margin;
+		return $this;
 	}
 
 	function SetTopMargin( $margin ) {
 		// Set top margin
 		$this->tMargin = $margin;
+		return $this;
 	}
 
 	function SetRightMargin( $margin ) {
 		// Set right margin
 		$this->rMargin = $margin;
+		return $this;
 	}
 
 	function SetAutoPageBreak( $auto, $margin = 0 ) {
@@ -204,6 +208,7 @@ class Fpdf
 		$this->AutoPageBreak = $auto;
 		$this->bMargin = $margin;
 		$this->PageBreakTrigger = $this->h - $margin;
+		return $this;
 	}
 
 	function SetDisplayMode( $zoom, $layout = 'default' ) {
@@ -216,6 +221,7 @@ class Fpdf
 			$this->LayoutMode = $layout;
 		else
 			$this->Error( 'Incorrect layout display mode: ' . $layout );
+		return $this;
 	}
 
 	function SetCompression( $compress ) {
@@ -224,31 +230,37 @@ class Fpdf
 			$this->compress = $compress;
 		else
 			$this->compress = false;
+		return $this;
 	}
 
 	function SetTitle( $title, $isUTF8 = false ) {
 		// Title of document
 		$this->metadata[ 'Title' ] = $isUTF8 ? $title : utf8_encode( $title );
+		return $this;
 	}
 
 	function SetAuthor( $author, $isUTF8 = false ) {
 		// Author of document
 		$this->metadata[ 'Author' ] = $isUTF8 ? $author : utf8_encode( $author );
+		return $this;
 	}
 
 	function SetSubject( $subject, $isUTF8 = false ) {
 		// Subject of document
 		$this->metadata[ 'Subject' ] = $isUTF8 ? $subject : utf8_encode( $subject );
+		return $this;
 	}
 
 	function SetKeywords( $keywords, $isUTF8 = false ) {
 		// Keywords of document
 		$this->metadata[ 'Keywords' ] = $isUTF8 ? $keywords : utf8_encode( $keywords );
+		return $this;
 	}
 
 	function SetCreator( $creator, $isUTF8 = false ) {
 		// Creator of document
 		$this->metadata[ 'Creator' ] = $isUTF8 ? $creator : utf8_encode( $creator );
+		return $this;
 	}
 
 	function AliasNbPages( $alias = '{nb}' ) {
@@ -362,6 +374,7 @@ class Fpdf
 			$this->DrawColor = sprintf( '%.3F %.3F %.3F RG', $r / 255, $g / 255, $b / 255 );
 		if( $this->page > 0 )
 			$this->_out( $this->DrawColor );
+		return $this;
 	}
 
 	function SetFillColor( $r, $g = null, $b = null ) {
@@ -373,6 +386,7 @@ class Fpdf
 		$this->ColorFlag = ( $this->FillColor != $this->TextColor );
 		if( $this->page > 0 )
 			$this->_out( $this->FillColor );
+		return $this;
 	}
 
 	function SetTextColor( $r, $g = null, $b = null ) {
@@ -382,6 +396,7 @@ class Fpdf
 		else
 			$this->TextColor = sprintf( '%.3F %.3F %.3F rg', $r / 255, $g / 255, $b / 255 );
 		$this->ColorFlag = ( $this->FillColor != $this->TextColor );
+		return $this;
 	}
 
 	function GetStringWidth( $s ) {
@@ -400,6 +415,7 @@ class Fpdf
 		$this->LineWidth = $width;
 		if( $this->page > 0 )
 			$this->_out( sprintf( '%.2F w', $width * $this->k ) );
+		return $this;
 	}
 
 	function Line( $x1, $y1, $x2, $y2 ) {
@@ -439,6 +455,7 @@ class Fpdf
 				$this->FontFiles[ $info[ 'file' ] ] = array( 'length1' => $info[ 'size1' ], 'length2' => $info[ 'size2' ] );
 		}
 		$this->fonts[ $fontkey ] = $info;
+		return $this;
 	}
 
 	function SetFont( $family, $style = '', $size = 0 ) {
@@ -483,6 +500,7 @@ class Fpdf
 		$this->CurrentFont = &$this->fonts[ $fontkey ];
 		if( $this->page > 0 )
 			$this->_out( sprintf( 'BT /F%d %.2F Tf ET', $this->CurrentFont[ 'i' ], $this->FontSizePt ) );
+		return $this;
 	}
 
 	function SetFontSize( $size ) {
@@ -493,6 +511,7 @@ class Fpdf
 		$this->FontSize = $size / $this->k;
 		if( $this->page > 0 )
 			$this->_out( sprintf( 'BT /F%d %.2F Tf ET', $this->CurrentFont[ 'i' ], $this->FontSizePt ) );
+		return $this;
 	}
 
 	function AddLink() {
@@ -509,6 +528,7 @@ class Fpdf
 		if( $page == -1 )
 			$page = $this->page;
 		$this->links[ $link ] = array( $page, $y );
+		return $this;
 	}
 
 	function Link( $x, $y, $w, $h, $link ) {
@@ -864,6 +884,7 @@ class Fpdf
 			$this->x = $x;
 		else
 			$this->x = $this->w + $x;
+		return $this;
 	}
 
 	function GetY() {
@@ -879,12 +900,14 @@ class Fpdf
 			$this->y = $this->h + $y;
 		if( $resetX )
 			$this->x = $this->lMargin;
+		return $this;
 	}
 
 	function SetXY( $x, $y ) {
 		// Set x and y positions
 		$this->SetX( $x );
 		$this->SetY( $y, false );
+		return $this;
 	}
 
 	function Output( $dest = '', $name = '', $isUTF8 = false ) {
@@ -935,6 +958,145 @@ class Fpdf
 		}
 		return '';
 	}
+	
+	function i25($xpos, $ypos, $code, $basewidth = 1, $height = 10)
+    {
+
+        $wide = $basewidth;
+        $narrow = $basewidth / 3;
+
+        // wide/narrow codes for the digits
+        $barChar['0'] = 'nnwwn';
+        $barChar['1'] = 'wnnnw';
+        $barChar['2'] = 'nwnnw';
+        $barChar['3'] = 'wwnnn';
+        $barChar['4'] = 'nnwnw';
+        $barChar['5'] = 'wnwnn';
+        $barChar['6'] = 'nwwnn';
+        $barChar['7'] = 'nnnww';
+        $barChar['8'] = 'wnnwn';
+        $barChar['9'] = 'nwnwn';
+        $barChar['A'] = 'nn';
+        $barChar['Z'] = 'wn';
+
+        // add leading zero if code-length is odd
+        if (strlen($code) % 2 != 0) {
+            $code = '0' . $code;
+        }
+
+        //$this->Text($xpos, $ypos + $height + 4, $code);
+        $this->SetFillColor(0);
+
+        // add start and stop codes
+        $code = 'AA' . strtolower($code) . 'ZA';
+
+        for ($i = 0; $i < strlen($code); $i = $i + 2) {
+            // choose next pair of digits
+            $charBar = $code[$i];
+            $charSpace = $code[$i + 1];
+            // check whether it is a valid digit
+            if (!isset($barChar[$charBar])) {
+                $this->Error('Invalid character in barcode: ' . $charBar);
+            }
+            if (!isset($barChar[$charSpace])) {
+                $this->Error('Invalid character in barcode: ' . $charSpace);
+            }
+            // create a wide/narrow-sequence (first digit=bars, second digit=spaces)
+            $seq = '';
+            for ($s = 0; $s < strlen($barChar[$charBar]); $s++) {
+                $seq .= $barChar[$charBar][$s] . $barChar[$charSpace][$s];
+            }
+            for ($bar = 0; $bar < strlen($seq); $bar++) {
+                // set lineWidth depending on value
+                if ($seq[$bar] == 'n') {
+                    $lineWidth = $narrow;
+                } else {
+                    $lineWidth = $wide;
+                }
+                // draw every second value, because the second digit of the pair is represented by the spaces
+                if ($bar % 2 == 0) {
+                    $this->Rect($xpos, $ypos, $lineWidth, $height, 'F');
+                }
+                $xpos += $lineWidth;
+            }
+        }
+    }
+
+    function Code39($xpos, $ypos, $code, $baseline = 0.5, $height = 5)
+    {
+
+        $wide = $baseline;
+        $narrow = $baseline / 3;
+        $gap = $narrow;
+
+        $barChar['0'] = 'nnnwwnwnn';
+        $barChar['1'] = 'wnnwnnnnw';
+        $barChar['2'] = 'nnwwnnnnw';
+        $barChar['3'] = 'wnwwnnnnn';
+        $barChar['4'] = 'nnnwwnnnw';
+        $barChar['5'] = 'wnnwwnnnn';
+        $barChar['6'] = 'nnwwwnnnn';
+        $barChar['7'] = 'nnnwnnwnw';
+        $barChar['8'] = 'wnnwnnwnn';
+        $barChar['9'] = 'nnwwnnwnn';
+        $barChar['A'] = 'wnnnnwnnw';
+        $barChar['B'] = 'nnwnnwnnw';
+        $barChar['C'] = 'wnwnnwnnn';
+        $barChar['D'] = 'nnnnwwnnw';
+        $barChar['E'] = 'wnnnwwnnn';
+        $barChar['F'] = 'nnwnwwnnn';
+        $barChar['G'] = 'nnnnnwwnw';
+        $barChar['H'] = 'wnnnnwwnn';
+        $barChar['I'] = 'nnwnnwwnn';
+        $barChar['J'] = 'nnnnwwwnn';
+        $barChar['K'] = 'wnnnnnnww';
+        $barChar['L'] = 'nnwnnnnww';
+        $barChar['M'] = 'wnwnnnnwn';
+        $barChar['N'] = 'nnnnwnnww';
+        $barChar['O'] = 'wnnnwnnwn';
+        $barChar['P'] = 'nnwnwnnwn';
+        $barChar['Q'] = 'nnnnnnwww';
+        $barChar['R'] = 'wnnnnnwwn';
+        $barChar['S'] = 'nnwnnnwwn';
+        $barChar['T'] = 'nnnnwnwwn';
+        $barChar['U'] = 'wwnnnnnnw';
+        $barChar['V'] = 'nwwnnnnnw';
+        $barChar['W'] = 'wwwnnnnnn';
+        $barChar['X'] = 'nwnnwnnnw';
+        $barChar['Y'] = 'wwnnwnnnn';
+        $barChar['Z'] = 'nwwnwnnnn';
+        $barChar['-'] = 'nwnnnnwnw';
+        $barChar['.'] = 'wwnnnnwnn';
+        $barChar[' '] = 'nwwnnnwnn';
+        $barChar['*'] = 'nwnnwnwnn';
+        $barChar['$'] = 'nwnwnwnnn';
+        $barChar['/'] = 'nwnwnnnwn';
+        $barChar['+'] = 'nwnnnwnwn';
+        $barChar['%'] = 'nnnwnwnwn';
+
+        $this->SetFillColor(0);
+
+        $code = '*' . strtoupper($code) . '*';
+        for ($i = 0; $i < strlen($code); $i++) {
+            $char = $code[$i];
+            if (!isset($barChar[$char])) {
+                $this->Error('Invalid character in barcode: ' . $char);
+            }
+            $seq = $barChar[$char];
+            for ($bar = 0; $bar < 9; $bar++) {
+                if ($seq[$bar] == 'n') {
+                    $lineWidth = $narrow;
+                } else {
+                    $lineWidth = $wide;
+                }
+                if ($bar % 2 == 0) {
+                    $this->Rect($xpos, $ypos, $lineWidth, $height, 'F');
+                }
+                $xpos += $lineWidth;
+            }
+            $xpos += $gap;
+        }
+    }
 
 	/*******************************************************************************
 	 *                              Protected methods                               *
